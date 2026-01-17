@@ -170,8 +170,11 @@
                 </div>
 
                 <div class="hero-section" id="welcome-section" style="display:none;">
-                    <h3 class="text-center mb-3">🎉 歡迎，<span id="displayUserName"></span>！</h3>
-                   <h3>關於這次的集資...</h3>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="m-0">🎉 歡迎，<span id="displayUserName"></span>！</h3>
+                        <button id="btnLogout" class="btn btn-outline-danger btn-sm">登出</button>
+                    </div>
+                    <h3>關於這次的集資...</h3>
                         <p>嗨大家！因為我要搬新家，很多朋友在問送什麼禮物比較適合。其實我們目前最需要的是一個實用的收納層架，希望能透過這個有趣的方式，<strong>集結大家的心意</strong>，讓我們一起「拼」出這個家的一部份！
                         </p>
                         <hr>
@@ -334,6 +337,9 @@
                     <div class="mb-3">
                         <label>目標金額：</label> <span id="modalTarget" class="fw-bold"></span>
                     </div>
+                    <div class="mb-2">
+                        <label>剩餘金額：</label> <span id="modalRemaining" class="fw-bold text-success"></span>
+                    </div>
                     <div class="mb-3">
                         <label>目前進度：</label>
                         <div class="progress mt-1">
@@ -379,10 +385,13 @@
 
         $(document).ready(function () {
 
-            // 1. 載入時抓取商品資料
+            // 1. 檢查是否已經登入過
+            checkLoginStatus();
+
+            // 2. 載入時抓取商品資料
             loadShelfItems();
 
-            // 2. 出席表單驗證與送出
+            // 3. 出席表單驗證與送出
             $("#attendanceForm").validate({
                 submitHandler: function (form) {
                     if (!currentUserName) {
@@ -416,7 +425,7 @@
                 }
             });
 
-            // 3. 確認贊助按鈕
+            // 4. 確認贊助按鈕
             $("#btnConfirmSponsor").click(function () {
                 if (!$("#sponsorForm").valid()) return;
 
@@ -429,12 +438,16 @@
                 const itemId = $("#hiddenItemId").val();
                 const itemName = $("#hiddenItemName").val();
                 const targetAmount = parseInt($("#modalTarget").data("target"));
+                const currentAmount = parseInt($("#modalTarget").data("current"));
                 const email = currentUserEmail;
                 const name = currentUserName;
 
-                // 檢查贊助金額是否超過商品原價
-                if (amount > targetAmount) {
-                    Swal.fire("金額超過上限", `贊助金額不能超過商品原價 $${targetAmount}`, "warning");
+                // 計算剩餘可贊助金額
+                const remainingAmount = targetAmount - currentAmount;
+
+                // 檢查贊助金額是否超過剩餘金額
+                if (amount > remainingAmount) {
+                    Swal.fire("金額超過上限", `目前剩餘可贊助金額為 $${remainingAmount}，您輸入的金額超過上限`, "warning");
                     return;
                 }
 
@@ -461,7 +474,7 @@
                     });
             });
 
-            // 4. 儲存使用者名字
+            // 5. 儲存使用者名字
             $("#btnSaveName").click(function () {
                 const userName = $("#userNameInput").val().trim();
                 if (!userName) {
@@ -469,10 +482,34 @@
                     return;
                 }
                 currentUserName = userName;
+                
+                // 將資料存入 LocalStorage
+                localStorage.setItem("userEmail", currentUserEmail);
+                localStorage.setItem("userName", currentUserName);
+                
                 $("#name-input-section").hide();
                 $("#welcome-section").fadeIn();
                 $("#displayUserName").text(userName);
                 loadMyList(currentUserEmail);
+            });
+
+            // 6. 登出按鈕
+            $("#btnLogout").click(function () {
+                // 清除本地儲存
+                localStorage.removeItem("userEmail");
+                localStorage.removeItem("userName");
+                
+                // 重置變數
+                currentUserEmail = "";
+                currentUserName = "";
+                
+                // 介面復原
+                $("#welcome-section").hide();
+                $("#name-input-section").hide();
+                $("#login-section").fadeIn();
+                $(".g_id_signin").show();
+                
+                Swal.fire("已登出", "期待您再次回來！", "info");
             });
 
         }); // End Document Ready
@@ -510,13 +547,16 @@
                     const dataset = $(this).data();
                     const percent = Math.round((dataset.current / dataset.target) * 100);
 
+                    const remainingAmount = dataset.target - dataset.current;
+                    
                     $("#modalItemName").text(dataset.name);
                     $("#hiddenItemId").val(dataset.id);
                     $("#hiddenItemName").val(dataset.name);
-                    $("#modalTarget").text(`$${dataset.target}`).data("target", dataset.target);
+                    $("#modalTarget").text(`$${dataset.target}`).data("target", dataset.target).data("current", dataset.current);
+                    $("#modalRemaining").text(`$${remainingAmount}`);
                     $("#modalProgressBar").css("width", percent + "%").text(percent + "%");
                     $("#modalProgressText").text(`已募集 $${dataset.current} (${percent}%)`);
-                    $("#sponsorAmount").val("").attr("max", dataset.target);
+                    $("#sponsorAmount").val("").attr("max", remainingAmount).attr("placeholder", `最多可贊助 $${remainingAmount}`);
 
                     $("#sponsorModal").modal("show");
                 });
@@ -528,10 +568,33 @@
             const responsePayload = decodeJwtResponse(response.credential);
 
             currentUserEmail = responsePayload.email;
+            // 注意：這裡不先存 userName，等使用者確認名字後才存
 
             $("#login-section").hide();
             $("#name-input-section").fadeIn();
             $("#userNameInput").val(responsePayload.name || "");
+        }
+
+        // 新增：檢查登入狀態
+        function checkLoginStatus() {
+            const storedEmail = localStorage.getItem("userEmail");
+            const storedName = localStorage.getItem("userName");
+
+            if (storedEmail && storedName) {
+                console.log("發現舊的登入紀錄，自動登入中...");
+                // 更新全域變數
+                currentUserEmail = storedEmail;
+                currentUserName = storedName;
+                
+                // 更新 UI
+                $("#login-section").hide();
+                $("#name-input-section").hide();
+                $("#welcome-section").fadeIn();
+                $("#displayUserName").text(storedName);
+                
+                // 載入清單
+                loadMyList(storedEmail);
+            }
         }
 
         function decodeJwtResponse(token) {
