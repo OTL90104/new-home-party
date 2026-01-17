@@ -171,17 +171,17 @@
 
                 <div class="hero-section" id="welcome-section" style="display:none;">
                     <h3 class="text-center mb-3">🎉 歡迎，<span id="displayUserName"></span>！</h3>
-                    <h4>關於這次的集資...</h4>
-                    <p>嗨大家！因為我們搬新家了，很多朋友在問送什麼禮物比較適合。其實我們最需要的是一個實用的收納層架，但因為無印良品的組合櫃整組買下來也是一筆開銷。</p>
-                    <p>所以我們想了一個好玩的活動，希望大家集資讓我們「拼」出這個層架！</p>
-                    <hr>
-                    <h5>💡 如何參與？</h5>
-                    <ul>
-                        <li>請切換到 <strong>「集資進度」</strong> 頁籤。</li>
-                        <li>你可以看到層架被拆解成好幾個部分（抽屜、層板、支架等）。</li>
-                        <li>點選閃爍的區塊（代表還沒集滿），可以輸入你想贊助的金額。</li>
-                        <li><strong>安心保證：</strong> 你的贊助金額只有我們後台看得到，前台只會顯示該品項目前的百分比進度。</li>
-                    </ul>
+                   <h3>關於這次的集資...</h3>
+                        <p>嗨大家！因為我要搬新家，很多朋友在問送什麼禮物比較適合。其實我們目前最需要的是一個實用的收納層架，希望能透過這個有趣的方式，<strong>集結大家的心意</strong>，讓我們一起「拼」出這個家的一部份！
+                        </p>
+                        <hr>
+                        <h5>💡 如何參與？</h5>
+                        <ul>
+                            <li>請切換到 <strong>「集資進度」</strong> 頁籤。</li>
+                            <li>你可以看到層架被拆解成好幾個部分（抽屜、層板、支架等）。</li>
+                            <li>點選閃爍的區塊（代表還沒集滿），可以輸入你想贊助的金額。</li>
+                            <li><strong>安心保證：</strong> 你的贊助金額只有我們後台看得到，前台只會顯示該品項目前的百分比進度。</li>
+                        </ul>
                 </div>
             </div>
 
@@ -425,11 +425,18 @@
                     return;
                 }
 
-                const amount = $("#sponsorAmount").val();
+                const amount = parseInt($("#sponsorAmount").val());
                 const itemId = $("#hiddenItemId").val();
                 const itemName = $("#hiddenItemName").val();
+                const targetAmount = parseInt($("#modalTarget").data("target"));
                 const email = currentUserEmail;
                 const name = currentUserName;
+
+                // 檢查贊助金額是否超過商品原價
+                if (amount > targetAmount) {
+                    Swal.fire("金額超過上限", `贊助金額不能超過商品原價 $${targetAmount}`, "warning");
+                    return;
+                }
 
                 const payload = {
                     action: "addSponsor",
@@ -506,10 +513,10 @@
                     $("#modalItemName").text(dataset.name);
                     $("#hiddenItemId").val(dataset.id);
                     $("#hiddenItemName").val(dataset.name);
-                    $("#modalTarget").text(`$${dataset.target}`);
+                    $("#modalTarget").text(`$${dataset.target}`).data("target", dataset.target);
                     $("#modalProgressBar").css("width", percent + "%").text(percent + "%");
                     $("#modalProgressText").text(`已募集 $${dataset.current} (${percent}%)`);
-                    $("#sponsorAmount").val("");
+                    $("#sponsorAmount").val("").attr("max", dataset.target);
 
                     $("#sponsorModal").modal("show");
                 });
