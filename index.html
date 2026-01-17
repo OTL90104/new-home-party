@@ -512,6 +512,12 @@
                 Swal.fire("已登出", "期待您再次回來！", "info");
             });
 
+            // 7. 防止表單按 Enter 造成頁面重整，並將其導向「確認贊助」按鈕
+            $("#sponsorForm").on("submit", function(e) {
+                e.preventDefault(); // 阻止瀏覽器預設的換頁行為
+                $("#btnConfirmSponsor").click(); // 假裝使用者按下了「確認贊助」按鈕
+            });
+
         }); // End Document Ready
 
         // --- Functions ---
