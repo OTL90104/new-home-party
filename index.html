@@ -125,6 +125,53 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             font-size: 1.2rem;
         }
+
+        /* 銀行帳戶資訊區塊樣式 */
+        .bank-info-section {
+            background: #f8f9fa;
+            border: 2px solid #0d6efd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .bank-info-section h5 {
+            color: #0d6efd;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .account-details {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .account-details p {
+            margin: 8px 0;
+            font-size: 1.05rem;
+        }
+
+        .account-details strong {
+            color: #333;
+            min-width: 100px;
+            display: inline-block;
+        }
+
+        .qr-code-container {
+            text-align: center;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .qr-code-container img {
+            max-width: 250px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
     </style>
 </head>
 
@@ -333,6 +380,27 @@
                             <tbody></tbody>
                         </table>
                     </div>
+
+                    <!-- 銀行帳戶資訊區塊 (有贊助紀錄時才顯示) -->
+                    <div id="bankInfoSection" class="bank-info-section" style="display: none;">
+                        <h5>💳 匯款資訊</h5>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="account-details">
+                                    <p><strong>銀行：</strong>824 連線商業銀行</p>
+                                    <p><strong>分行：</strong>總行 6880</p>
+                                    <p><strong>帳號：</strong>111010169900</p>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="qr-code-container">
+                                    <p class="fw-bold mb-2">掃描 QR Code 匯款</p>
+                                    <img src="images/account_qr.png" alt="帳戶 QR Code" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <p class="text-muted small" style="display: none;">QR Code 圖片載入失敗</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -428,6 +496,8 @@
                         .done(function (res) {
                             Swal.fire("感謝填寫!", "期待與你在新家相見!", "success");
                             $("#attendanceForm")[0].reset();
+                            // 跳轉到第二個頁籤（活動說明）
+                            $('#home-tab').tab('show');
                         })
                         .fail(function () {
                             Swal.fire("Oops...", "傳送失敗，請稍後再試", "error");
@@ -481,6 +551,8 @@
                         Swal.fire("贊助成功!", "謝謝你的心意！", "success");
                         loadShelfItems(); // 重新整理進度
                         if (currentUserEmail) loadMyList(currentUserEmail); // 如果已登入，更新清單
+                        // 跳轉到第四個頁籤（我的贊助清單）
+                        $('#mylist-tab').tab('show');
                     })
                     .always(function () {
                         $("#btnConfirmSponsor").prop('disabled', false).text("確認贊助");
@@ -504,6 +576,9 @@
                 $("#welcome-section").fadeIn();
                 $("#displayUserName").text(userName);
                 loadMyList(currentUserEmail);
+                
+                // 跳轉到第三個頁籤（集資進度）
+                $('#progress-tab').tab('show');
             });
 
             // 6. 登出按鈕
@@ -650,6 +725,13 @@
                 `;
                     tbody.append(tr);
                 });
+
+                // 顯示或隱藏銀行帳戶資訊區塊（贊助筆數大於0時才顯示）
+                if (data.length > 0) {
+                    $("#bankInfoSection").fadeIn();
+                } else {
+                    $("#bankInfoSection").hide();
+                }
 
                 $('#mySponsorTable').DataTable({
                     "language": { "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json" }
