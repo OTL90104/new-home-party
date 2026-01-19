@@ -180,18 +180,20 @@
     <div class="container py-4">
         <div class="text-center mb-4">
             <h1>🏠 Welcome to Our New Home</h1>
-            <p class="text-muted">新家集資 & 暖房派對邀請</p>
+            <p class="text-muted">暖房派對邀請 & 書櫃共築計劃</p>
         </div>
 
         <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
             <li class="nav-item"><button class="nav-link active" id="attendance-tab" data-bs-toggle="tab"
                     data-bs-target="#attendance" type="button">出席確認</button></li>
-            <li class="nav-item"><button class="nav-link" id="home-tab" data-bs-toggle="tab"
-                    data-bs-target="#home" type="button">活動說明</button></li>
+            <li class="nav-item"><button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                    type="button">書櫃共築計劃(自由參加喔!!)</button></li>
             <li class="nav-item"><button class="nav-link" id="progress-tab" data-bs-toggle="tab"
-                    data-bs-target="#progress" type="button">集資進度</button></li>
+                    data-bs-target="#progress" type="button">計劃進度</button></li>
             <li class="nav-item"><button class="nav-link" id="mylist-tab" data-bs-toggle="tab" data-bs-target="#mylist"
                     type="button">我的贊助清單</button></li>
+            <li class="nav-item"><button class="nav-link" id="concert-tab" data-bs-toggle="tab"
+                    data-bs-target="#concert" type="button">3.12 北醫音樂會</button></li>
         </ul>
 
         <div class="tab-content" id="myTabContent">
@@ -208,11 +210,44 @@
                     <hr>
                     <h5>💡 如何參與？</h5>
                     <ul>
-                        <li>請切換到 <strong>「集資進度」</strong> 頁籤。</li>
+                        <li>請切換到 <strong>「計劃進度」</strong> 頁籤。</li>
                         <li>你可以看到層架被拆解成好幾個部分（抽屜、層板、支架等）。</li>
                         <li>點選閃爍的區塊（代表還沒集滿），可以輸入你想贊助的金額。</li>
                         <li><strong>安心保證：</strong> 你的贊助金額只有我們後台看得到，前台只會顯示該品項目前的百分比進度。</li>
                     </ul>
+
+                    <hr>
+                    <h5>🎁 贊助回饋</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title">🍽️ 回饋1：美味的大餐</h6>
+                                    <p class="card-text">感謝您的贊助，邀請您一起享用美味的新居派對大餐！</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title">🎵 回饋2：北醫音樂會門票</h6>
+                                    <p class="card-text">2026.3.12 (四) 19:30<br>北醫管絃樂團年度音樂會<br>國家音樂廳</p>
+                                    <a href="https://www.opentix.life/event/2000497794253086721" target="_blank"
+                                        rel="noopener" class="btn btn-sm btn-outline-primary">查看詳情</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title">♻️ 回饋3：環保按壓瓶減量器</h6>
+                                    <p class="card-text">錫藝之美，永續之選<br>壓少一點－按壓瓶減量器</p>
+                                    <a href="https://www.zeczec.com/projects/press-less" target="_blank" rel="noopener"
+                                        class="btn btn-sm btn-outline-success">查看專案</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="hero-section" id="login-section">
@@ -273,12 +308,14 @@
                 <div class="hero-section">
                     <h4 class="mb-3">🎉 暖房派對出席確認</h4>
                     <p>感謝大家平常的照顧！我們要統計最終用餐人數，麻煩大家幫我填寫一下。</p>
-                    <p>新家地址：台北市信義區信義路五段150巷22弄1號四樓</p>
-<img src="images/maps.jpg" alt="新家地圖" class="shelf-main-img" style="max-width: 80%; margin-bottom: 20px;">
+                    <p>新家地址：台北市信義區信義路五段150巷22弄~</p>
+                    <img src="images/maps.jpg" alt="新家地圖" class="shelf-main-img"
+                        style="max-width: 80%; margin-bottom: 20px;">
                     <form id="attendanceForm">
                         <div class="mb-3">
                             <label class="form-label fw-bold">1. 您的名字</label>
-                            <input type="text" class="form-control" name="attendeeName" id="attendeeName" placeholder="請輸入您的名字" required>
+                            <input type="text" class="form-control" name="attendeeName" id="attendeeName"
+                                placeholder="請輸入您的名字" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">2. 出席新家派對的時間 (可多選)</label>
@@ -376,6 +413,7 @@
                                     <th>時間</th>
                                     <th>品項</th>
                                     <th>金額</th>
+                                    <th>狀態</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -397,10 +435,125 @@
                             <div class="col-md-5">
                                 <div class="qr-code-container">
                                     <p class="fw-bold mb-2">掃描 QR Code 匯款</p>
-                                    <img src="images/account_qr.jpg" alt="帳戶 QR Code" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <img src="images/account_qr.jpg" alt="帳戶 QR Code"
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                                     <p class="text-muted small" style="display: none;">QR Code 圖片載入失敗</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="concert">
+                <div class="hero-section">
+                    <div class="text-center mb-4">
+                        <h3>🎵 《Eroica》臺北醫學大學管絃樂團年度音樂會</h3>
+                        <p class="text-muted">Taipei Medical University Orchestra Annual Concert</p>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">📅 演出資訊</h5>
+                                    <p class="mb-2"><strong>日期時間：</strong>2026年3月12日 (四) 19:30</p>
+                                    <p class="mb-2"><strong>演出地點：</strong>國家音樂廳<br>臺北市中正區中山南路21-1號</p>
+                                    <p class="mb-0"><strong>主辦單位：</strong>臺北醫學大學管絃樂團</p>
+                                    <p class="mb-0"><strong>類別：</strong>音樂 │ <strong>分級：</strong>普遍級</p>
+                                    <p class="mb-0"><strong>票價：</strong>$300 / $500 / $800 / $1,000 / $1,200 / $1,500
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">🎟️ 購票資訊</h5>
+                                    <p class="mb-3">提供電子票、電腦配位及自行選位服務</p>
+                                    <a href="https://www.opentix.life/event/2000497794253086721" target="_blank"
+                                        rel="noopener" class="btn btn-primary btn-lg w-100 mb-2">前往 OPENTIX 購票</a>
+                                    <div class="alert alert-info mb-0" role="alert">
+                                        <small>
+                                            <strong>優惠資訊：</strong><br>
+                                            • 2026/02/06前早鳥票7折<br>
+                                            • 學生票9折（需出示證件）<br>
+                                            • 65歲以上長者5折<br>
+                                            • 身心障礙者及陪同者5折
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">🎼 演出曲目</h5>
+                            <p>在忙碌的醫學訓練日常裡，臺北醫學大學管絃樂團以對音樂的初心，期待學生團員在演奏中與人分享喜悅、帶來溫暖。今年我們以全貝多芬節目為主軸，展開一段關於光與自由的旅程。</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <strong>貝多芬：《雷歐諾拉序曲》第三號</strong><br>
+                                    <small class="text-muted">L.v. Beethoven: Leonore Overture No.3</small>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>貝多芬：《莫德林格舞曲》十一首 WoO 17</strong><br>
+                                    <small class="text-muted">L.v. Beethoven: 11 Mödlinger Tänze, WoO 17</small>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>貝多芬：第三號交響曲《英雄》</strong><br>
+                                    <small class="text-muted">L.v. Beethoven: Symphony No.3, "Eroica"</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">🎻 指揮暨音樂總監</h5>
+                                    <h6 class="text-primary">廖嘉弘</h6>
+                                    <p class="small">指揮家、小提琴家廖嘉弘，國立維也納音樂院演奏家文憑及藝術碩士，現為國立臺灣師範大學音樂學院院長暨音樂系專任教授。</p>
+                                    <blockquote class="blockquote small">
+                                        <p class="mb-1">"他富維也納樂派風格，音樂性敏感細膩，具備了廣泛深刻的音樂詮釋力"</p>
+                                        <footer class="blockquote-footer">維也納音樂季權威樂評家 M. Ruedenauer</footer>
+                                    </blockquote>
+                                    <blockquote class="blockquote small">
+                                        <p class="mb-1">"演出深具大將風範，是一位音樂風格充滿自信兼具東方神韻的音樂家"</p>
+                                        <footer class="blockquote-footer">華盛頓郵報</footer>
+                                    </blockquote>
+                                    <p class="small mb-0">精湛琴藝榮獲國內外肯定，演奏足跡遍及歐洲、美洲、澳洲及日本，並常受邀於世界各地大師班講座。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">🎹 助理指揮暨指導教師</h5>
+                                    <h6 class="text-primary">章皓維</h6>
+                                    <p class="small">
+                                        國立臺灣師範大學音樂系指揮碩士，鋼琴與管絃樂指揮雙主修，為國內少數深入鋼琴、室內樂、管絃暨歌劇曲目的青年指揮暨鋼琴家。現就讀國立臺灣師範大學音樂系博士班。
+                                    </p>
+                                    <p class="small"><strong>得獎經歷：</strong></p>
+                                    <ul class="small mb-2">
+                                        <li>行天宮菁音獎鋼琴比賽得主</li>
+                                        <li>YAMAHA全國鋼琴大賽得主</li>
+                                        <li>豐泰室內樂大賽得主</li>
+                                        <li>臺灣國際雙鋼琴與聯彈音樂大賽得主</li>
+                                    </ul>
+                                    <p class="small mb-0">致力於推廣音樂藝術與樂團教育，現任新北市交響樂團助理指揮、之間樂團音樂總監、臺北醫學大學管弦樂團副指揮等職。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">🎺 關於臺北醫學大學管絃樂團</h5>
+                            <p>臺北醫學大學管絃樂團成立於民國68年，儘管醫學領域課業繁重，樂團仍保持每週至少一次的例行團練，在現任指揮暨音樂總監廖嘉弘教授的帶領之下，每年均定期在校內外各場合舉辦演出，頗受好評及熱烈迴響。
+                            </p>
+                            <p class="mb-0">作為醫學大學的一份子，我們不僅僅要能夠治療身體的疾病，更要能夠療癒心靈。透過音樂，我們希望能夠帶給社會更多的溫暖與希望。</p>
                         </div>
                     </div>
                 </div>
@@ -569,16 +722,16 @@
                     return;
                 }
                 currentUserName = userName;
-                
+
                 // 將資料存入 LocalStorage
                 localStorage.setItem("userEmail", currentUserEmail);
                 localStorage.setItem("userName", currentUserName);
-                
+
                 $("#name-input-section").hide();
                 $("#welcome-section").fadeIn();
                 $("#displayUserName").text(userName);
                 loadMyList(currentUserEmail);
-                
+
                 // 跳轉到第三個頁籤（集資進度）
                 $('#progress-tab').tab('show');
             });
@@ -588,22 +741,22 @@
                 // 清除本地儲存
                 localStorage.removeItem("userEmail");
                 localStorage.removeItem("userName");
-                
+
                 // 重置變數
                 currentUserEmail = "";
                 currentUserName = "";
-                
+
                 // 介面復原
                 $("#welcome-section").hide();
                 $("#name-input-section").hide();
                 $("#login-section").fadeIn();
                 $(".g_id_signin").show();
-                
+
                 Swal.fire("已登出", "期待您再次回來！", "info");
             });
 
             // 7. 防止表單按 Enter 造成頁面重整，並將其導向「確認贊助」按鈕
-            $("#sponsorForm").on("submit", function(e) {
+            $("#sponsorForm").on("submit", function (e) {
                 e.preventDefault(); // 阻止瀏覽器預設的換頁行為
                 $("#btnConfirmSponsor").click(); // 假裝使用者按下了「確認贊助」按鈕
             });
@@ -622,7 +775,7 @@
                     const isFull = percent >= 100;
                     const blinkClass = isFull ? "" : "blinking";
                     const pointerEvent = isFull ? "style='pointer-events:none; opacity:0.8;'" : "";
-                    const displayPercent = isFull ? "已額滿" : `${percent}%`;
+                    const displayPercent = isFull ? "已達標!!" : `${percent}%`;
 
                     const html = `
                     <div class="part-card ${blinkClass}" ${pointerEvent} 
@@ -644,7 +797,7 @@
                     const percent = Math.round((dataset.current / dataset.target) * 100);
 
                     const remainingAmount = dataset.target - dataset.current;
-                    
+
                     $("#modalItemName").text(dataset.name);
                     $("#hiddenItemId").val(dataset.id);
                     $("#hiddenItemName").val(dataset.name);
@@ -681,13 +834,13 @@
                 // 更新全域變數
                 currentUserEmail = storedEmail;
                 currentUserName = storedName;
-                
+
                 // 更新 UI
                 $("#login-section").hide();
                 $("#name-input-section").hide();
                 $("#welcome-section").fadeIn();
                 $("#displayUserName").text(storedName);
-                
+
                 // 載入清單
                 loadMyList(storedEmail);
             }
@@ -713,16 +866,28 @@
 
                 data.forEach(row => {
                     const date = new Date(row.timestamp).toLocaleDateString();
+
+                    // 判斷狀態顯示什麼文字或圖示
+                    // 假設 Google Sheet 裡打勾是 TRUE 或 "TRUE"
+                    const isChecked = row.is_checked === true || row.is_checked === "TRUE" || row.is_checked === "V";
+                    const statusHtml = isChecked
+                        ? '<span class="badge bg-success">已確認</span>'
+                        : '<span class="badge bg-secondary">確認中</span>';
+
+                    // 如果已確認，取消按鈕要 disabled
+                    const cancelButtonHtml = isChecked
+                        ? '<button class="btn btn-sm btn-secondary" disabled>已確認</button>'
+                        : `<button class="btn btn-sm btn-danger btn-cancel" 
+                                data-id="${row.item_id}" 
+                                data-amount="${row.amount}">取消</button>`;
+
                     const tr = `
                     <tr>
                         <td>${date}</td>
                         <td>${row.item_name}</td>
                         <td>$${row.amount}</td>
-                        <td>
-                            <button class="btn btn-sm btn-danger btn-cancel" 
-                                data-id="${row.item_id}" 
-                                data-amount="${row.amount}">取消</button>
-                        </td>
+                        <td>${statusHtml}</td>
+                        <td>${cancelButtonHtml}</td>
                     </tr>
                 `;
                     tbody.append(tr);
@@ -773,5 +938,3 @@
 </body>
 
 </html>
-
-
