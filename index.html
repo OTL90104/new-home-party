@@ -309,8 +309,10 @@
                     <h4 class="mb-3">🎉 暖房派對出席確認</h4>
                     <p>感謝大家平常的照顧！我們要統計最終用餐人數，麻煩大家幫我填寫一下。</p>
                     <p>新家地址：台北市信義區信義路五段150巷22弄~</p>
-                    <img src="images/maps.jpg" alt="新家地圖" class="shelf-main-img"
-                        style="max-width: 80%; margin-bottom: 20px;">
+                                        <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4299.240104268469!2d121.56799444121837!3d25.02675661606346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abb2f279473d%3A0xf4afc3301721d167!2zMTEw5Y-w5YyX5biC5L-h5LmJ5Yy65L-h576p6Lev5LqU5q61MTUw5be3MjLlvIQx6Jmf!5e0!3m2!1szh-TW!2stw!4v1768801446323!5m2!1szh-TW!2stw"
+                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                     <form id="attendanceForm">
                         <div class="mb-3">
                             <label class="form-label fw-bold">1. 您的名字</label>
@@ -775,7 +777,7 @@
                     const isFull = percent >= 100;
                     const blinkClass = isFull ? "" : "blinking";
                     const pointerEvent = isFull ? "style='pointer-events:none; opacity:0.8;'" : "";
-                    const displayPercent = isFull ? "已達標!!" : `${percent}%`;
+                    const displayPercent = isFull ? "已達標!" : `${percent}%`;
 
                     const html = `
                     <div class="part-card ${blinkClass}" ${pointerEvent} 
@@ -938,3 +940,4 @@
 </body>
 
 </html>
+
